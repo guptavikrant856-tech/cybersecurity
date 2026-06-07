@@ -4,20 +4,22 @@ import platform
 
 st.title("⚙️ Running Processes")
 
-if platform.system() != "Windows":
-    st.warning("Process listing only works on Windows.")
-else:
+try:
+    if platform.system() == "Windows":
 
-    if st.button("Show Processes"):
+        result = subprocess.check_output(
+            "tasklist",
+            shell=True
+        ).decode(errors="ignore")
 
-        try:
+    else:
 
-            result = subprocess.check_output(
-                "tasklist",
-                shell=True
-            ).decode(errors="ignore")
+        result = subprocess.check_output(
+            ["ps", "aux"],
+            text=True
+        )
 
-            st.text(result)
+    st.text(result)
 
-        except Exception as e:
-            st.error(str(e))
+except Exception as e:
+    st.error(str(e))
