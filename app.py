@@ -9,13 +9,15 @@ st.set_page_config(
 st.title("🛡️ Cyber Security Dashboard")
 
 st.markdown("""
-Welcome to the Cyber Security Dashboard.
+### Available Tools
 
-Use the sidebar to access:
+- 🔍 Port Scanner
+- 🛡️ Firewall Status
+- ⚙️ Running Processes
 
-- Port Scanner
-- Firewall Status
-- Running Processes
+Use the sidebar to navigate.
 """)
 
-st.success("Dashboard Loaded Successfully")
+st.info(
+    "When deployed publicly, results reflect the server running the application."
+)
