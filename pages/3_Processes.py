@@ -1,25 +1,20 @@
 import streamlit as st
-import subprocess
-import platform
+import psutil
 
 st.title("⚙️ Running Processes")
 
 try:
-    if platform.system() == "Windows":
+    processes = []
 
-        result = subprocess.check_output(
-            "tasklist",
-            shell=True
-        ).decode(errors="ignore")
+    for proc in psutil.process_iter(['pid', 'name']):
+        try:
+            processes.append(
+                f"PID: {proc.info['pid']} | {proc.info['name']}"
+            )
+        except:
+            pass
 
-    else:
-
-        result = subprocess.check_output(
-            ["ps", "aux"],
-            text=True
-        )
-
-    st.text(result)
+    st.text("\n".join(processes[:500]))
 
 except Exception as e:
     st.error(str(e))
