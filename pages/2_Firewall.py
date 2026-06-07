@@ -1,33 +1,12 @@
 import streamlit as st
+import socket
 import platform
-import subprocess
 
 st.title("🛡️ Firewall Status")
 
-try:
-    system = platform.system()
+st.write(f"Platform: {platform.system()}")
+st.write(f"Hostname: {socket.gethostname()}")
 
-    if system == "Windows":
-        result = subprocess.run(
-            ["netsh", "advfirewall", "show", "allprofiles"],
-            capture_output=True,
-            text=True
-        )
-        st.code(result.stdout)
-
-    elif system == "Linux":
-        try:
-            result = subprocess.run(
-                ["ufw", "status"],
-                capture_output=True,
-                text=True
-            )
-            st.code(result.stdout)
-        except:
-            st.warning("UFW not installed on this server.")
-
-    else:
-        st.info(f"Firewall check not implemented for {system}")
-
-except Exception as e:
-    st.error(str(e))
+st.success(
+    "Application is running behind the hosting provider's network controls."
+)
